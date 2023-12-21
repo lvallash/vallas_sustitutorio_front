@@ -1,0 +1,91 @@
+
+<div class="container">
+    <form  class="mat-dialog-content"  id="idFormModalidad"  [formGroup]="formsActualizar">
+      <div class="row">
+            <mat-toolbar color="primary" >    
+              <span>Actualizar Docente</span>    
+            </mat-toolbar>  
+      </div>
+      <div  class="row"  style="margin-top: 3%">
+                <mat-form-field class="col-md-8">
+                    <mat-label>Nombre</mat-label>
+                    <input  matInput  [(ngModel)]="docente.nombre"  name="nombre" 
+                        formControlName="validaNombre" maxlength="30">
+                    <mat-hint style="color: red" *ngIf="formsActualizar.controls.validaNombre.touched">
+                        <span *ngIf="formsActualizar.controls.validaNombre.hasError('required')">
+                               El nombre es requerido 
+                        </span>
+                        <span *ngIf="formsActualizar.controls.validaNombre.hasError('pattern')">
+                               El nombre es de 3 a 30 caracteres 
+                        </span>
+                    </mat-hint> 
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                    <mat-label>DNI</mat-label>
+                    <input  matInput  [(ngModel)]="docente.dni"   name="dni"  formControlName="validaDNI" maxlength="8">
+                    <mat-hint style="color: red" *ngIf="formsActualizar.controls.validaDNI.touched">
+                        <span *ngIf="formsActualizar.controls.validaDNI.hasError('required')">
+                               El DNI es requerido 
+                        </span>
+                        <span *ngIf="formsActualizar.controls.validaDNI.hasError('pattern')">
+                               El DNI tiene 8 dígitos
+                        </span>
+                    </mat-hint>
+                </mat-form-field>
+        </div>
+       
+
+
+        <div class="row" style="margin-top: 5%">
+            <mat-form-field class="col-md-4">
+                <mat-label>Fecha de Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="docente.fechanacimiento" formControlName="validaFechaNacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field class="col-md-4">
+                <mat-label>Sueldo</mat-label>
+                <input matInput type="number" [(ngModel)]="docente.sueldo" formControlName="validaSueldo">
+            </mat-form-field>
+        
+            <mat-form-field class="col-md-4">
+                <mat-label>Sexo</mat-label>
+                <mat-select [(ngModel)]="docente.sexo" formControlName="validaSexo">
+                    <mat-option value="masculino">masculino</mat-option>
+                    <mat-option value="femenino">femenino</mat-option>
+                </mat-select>
+            </mat-form-field>
+        
+            
+            <mat-form-field class="col-md-4">
+                <mat-label>Categoria</mat-label>
+                <mat-select [(ngModel)]="docente.categoria" (selectionChange)="cargarCategoria()" formControlName="validaCategoria">
+                    <mat-option *ngFor="let x of categorias" [value]="x.idcategoria">
+                        {{x.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        
+
+        </div>
+
+        <div  mat-dialog-actions>
+                <button mat-raised-button 
+                        type="submit" 
+                        (click) = "actualizar()"
+                        color="primary" 
+                        [disabled]="formsActualizar.invalid"
+                        [mat-dialog-close]="1">
+                        Actualizar
+                </button>
+                <button mat-button 
+                        color="primary">
+                        Salir
+                </button>
+        </div>
+
+      </form>
+  </div>
